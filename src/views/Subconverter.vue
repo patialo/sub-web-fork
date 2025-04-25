@@ -56,7 +56,8 @@
                     <div slot="suffix" style="width: 10px;">:</div>
                   </el-input>
                   <el-input v-model="param.value" placeholder="自定义参数内容">
-                      <el-button slot="suffix" type="text" icon="el-icon-delete" style="margin-right: 5px" @click="customParams.splice(i, 1)"/>
+                    <el-button slot="suffix" type="text" icon="el-icon-delete" style="margin-right: 5px"
+                      @click="customParams.splice(i, 1)" />
                   </el-input>
                 </el-form-item>
 
@@ -70,10 +71,10 @@
                         <el-checkbox v-model="form.emoji" label="Emoji"></el-checkbox>
                       </el-row>
                       <el-row>
-                        <el-checkbox v-model="form.scv" label="跳过证书验证"></el-checkbox>
+                        <el-checkbox v-model="form.udp" @change="needUdp = true" label="启用 UDP"></el-checkbox>
                       </el-row>
                       <el-row>
-                        <el-checkbox v-model="form.udp" @change="needUdp = true" label="启用 UDP"></el-checkbox>
+                        <el-checkbox v-model="form.scv" label="跳过证书验证"></el-checkbox>
                       </el-row>
                       <el-row>
                         <el-checkbox v-model="form.appendType" label="节点类型"></el-checkbox>
@@ -180,7 +181,7 @@
       <div slot="title">
         解析 Subconverter 链接
       </div>
-      <el-form label-position="left" :inline="true" >
+      <el-form label-position="left" :inline="true">
         <el-form-item prop="uploadConfig" label="订阅链接：" label-width="85px">
           <el-input v-model="loadConfig" style="width: 565px"></el-input>
         </el-form-item>
@@ -227,66 +228,97 @@ export default {
           ssd: "ssd",
           sssub: "sssub",
           ssr: "ssr",
-          ClashR: "clashr",          
+          ClashR: "clashr",
           V2Ray: "v2ray",
           Trojan: "trojan",
           Surge3: "surge&ver=3",
         },
-        backendOptions: [{ value: "http://127.0.0.1:25500/sub?" }],
+        backendOptions: [{ value: "https://subconvert.dynamicnexa.com:33333/sub?" }, { value: "https://api.dler.io" }],
         remoteConfig: [
           {
-            label: "universal",
+            label: "自定义分组【--若不了解请勿使用--】",
             options: [
               {
-                label: "No-Urltest",
+                label: "acl4ssr-fork-default",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/universal/no-urltest.ini"
+                  "https://raw.githubusercontent.com/patialo/ACL4SSR-fork/master/Clash/config/ACL4SSR_Online_Full.ini"
               },
               {
-                label: "Urltest",
+                label: "acl4ssr-fork-gohome",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/universal/urltest.ini"
+                  "https://raw.githubusercontent.com/patialo/ACL4SSR-fork/master/Clash/config/ACL4SSR_Online_Full-home.ini"
               }
             ]
           },
           {
-            label: "customized",
+            label: "ACL4SSR【--推荐使用--】",
             options: [
               {
-                label: "Maying",
+                label: "【--推荐用这个--】ACL4SSR_Online_Full 全分组 重度用户使用 (与Github同步)",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/maying.ini"
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full.ini"
               },
               {
-                label: "Ytoo",
+                label: "ACL4SSR_Online_Full_NoAuto.ini 全分组 无自动测速 重度用户使用 (与Github同步)",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/ytoo.ini"
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_NoAuto.ini"
               },
               {
-                label: "FlowerCloud",
+                label: "ACL4SSR_Online_Full_AdblockPlus 全分组 重度用户使用 更多去广告 (与Github同步)",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/flowercloud.ini"
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_AdblockPlus.ini"
               },
               {
-                label: "Nexitally",
+                label: "ACL4SSR_Online_Full_Netflix 全分组 重度用户使用 奈飞全量 (与Github同步)",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/nexitally.ini"
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_Netflix.ini"
               },
               {
-                label: "SoCloud",
+                label: "ACL4SSR_Online 默认版 分组比较全 (与Github同步)",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/socloud.ini"
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini"
               },
               {
-                label: "ARK",
+                label: "ACL4SSR_Online_AdblockPlus 更多去广告 (与Github同步)",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/ark.ini"
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_AdblockPlus.ini"
               },
               {
-                label: "ssrCloud",
+                label: "ACL4SSR_Online_NoAuto 无自动测速 (与Github同步)",
                 value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/ssrcloud.ini"
-              }
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_NoAuto.ini"
+              },
+              {
+                label: "ACL4SSR_Online_NoReject 无广告拦截规则 (与Github同步)",
+                value:
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_NoReject.ini"
+              },
+              {
+                label: "ACL4SSR_Online_Mini 精简版 (与Github同步)",
+                value:
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini.ini"
+              },
+              {
+                label: "ACL4SSR_Online_Mini_AdblockPlus.ini 精简版 更多去广告 (与Github同步)",
+                value:
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_AdblockPlus.ini"
+              },
+              {
+                label: "ACL4SSR_Online_Mini_NoAuto.ini 精简版 不带自动测速 (与Github同步)",
+                value:
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_NoAuto.ini"
+              },
+              {
+                label: "ACL4SSR_Online_Mini_Fallback.ini 精简版 带故障转移 (与Github同步)",
+                value:
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_Fallback.ini"
+              },
+              {
+                label: "ACL4SSR_Online_Mini_MultiMode.ini 精简版 自动测速、故障转移、负载均衡 (与Github同步)",
+                value:
+                  "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_MultiMode.ini"
+              },
+
             ]
           },
           {
@@ -318,9 +350,9 @@ export default {
         nodeList: false,
         extraset: false,
         sort: false,
-        udp: false,
+        udp: true,
         tfo: false,
-        scv: true,
+        scv: false,
         fdn: false,
         expand: true,
         appendType: false,
@@ -367,7 +399,7 @@ export default {
   },
   mounted() {
     this.form.clientType = "clash";
-    this.notify();
+    // this.notify();
     this.getBackendVersion();
   },
   methods: {
@@ -408,7 +440,7 @@ export default {
       const url = "surge://install-config?url=";
       window.open(url + this.customSubUrl);
     },
-    addCustomParam(){
+    addCustomParam() {
       this.customParams.push({
         name: "",
         value: "",

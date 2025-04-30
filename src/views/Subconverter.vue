@@ -233,7 +233,7 @@ export default {
           Trojan: "trojan",
           Surge3: "surge&ver=3",
         },
-        backendOptions: [{ value: "https://subconvert.dynamicnexa.com:33333/sub?" }, { value: "https://api.dler.io" }],
+        backendOptions: [{ value: "https://subconvert.dynamicnexa.com:33333/sub?" }, { value: "https://api.dler.io/sub?" }],
         remoteConfig: [
           {
             label: "自定义分组【--若不了解请勿使用--】",
